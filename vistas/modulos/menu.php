@@ -29,6 +29,19 @@
 
                     </a>
                 </li>
+                <li>
+                    <a href="measurements">
+                        <i class="fa fa-heartbeat"></i> <span>Administrar Mediciones</span>
+
+                    </a>
+                </li>
+
+                <li>
+                    <a href="students">
+                        <i class="fa fa-heartbeat"></i> <span>Administrar Estudiantes</span>
+
+                    </a>
+                </li>
 
 
 

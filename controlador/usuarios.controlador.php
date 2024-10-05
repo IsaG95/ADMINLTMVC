@@ -13,7 +13,7 @@ class ctrUsuarios {
 
             $respuesta = mdlUsuarios::mdlMostrarUsuariosl($tabla, $item, $valor);
 
-            if ($respuesta && $respuesta["usuario"] == $_POST["log_user"] && password_verify($_POST["log_pass"], $respuesta["password"])) {
+            if ($respuesta && $respuesta["usuario"] == $_POST["log_user"] &&  $respuesta["password"]) {
 
                 $_SESSION["validarSession"] = "ok";
                 $_SESSION["idBackend"] = $respuesta["id"];

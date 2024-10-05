@@ -5,11 +5,15 @@ session_start();
 
 $usuarios = ctrUsuarios::ctrMostrarUsuarios();
 
+$mediciones = ctrMeasurements::ctrMostrarMediciones();
+
+$students = ctrStudents::ctrMostrarEstudiantes();
+
 $roles = ctrRoles::ctrMostrarRoles2();
 
-// var_dump($usuarios);
+ //var_dump($students);
 
-// echo "</pre>";  print_r($usuarios); echo "</pre>";
+ //echo "</pre>";  print_r($students); echo "</pre>";
 
 
 
@@ -96,7 +100,11 @@ include "paginas/login.php";
 
             if($_GET["pagina"]== "usuarios" ||
                $_GET["pagina"]== "salir" ||
-               $_GET["pagina"]== "roles"){
+               $_GET["pagina"]== "roles" ||
+               $_GET["pagina"]== "students" ||
+               $_GET["pagina"]== "measurements")
+               
+               {
 
                 include "paginas/".$_GET["pagina"].".php";
 
@@ -138,7 +146,7 @@ include "paginas/login.php";
     })
     </script>
 </body>
-
+ 
 <?php endif ?>
 
 </html>
