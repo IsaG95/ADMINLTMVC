@@ -11,7 +11,7 @@ class AjaxMeasurements {
         $item = "id";
         $valor = $this->idMeasurement;
 
-        $respuesta = ctrMeasurements::ctrMostrarMeasurements1($item, $valor);
+        $respuesta = ctrMeasurements::ctrMostrarMediciones($item, $valor);
 
         echo json_encode($respuesta);
     }
@@ -19,7 +19,7 @@ class AjaxMeasurements {
     public $idEliminarMeasurement;
 
     public function ajaxEliminarMeasurement() {
-        $respuesta = ctrMeasurements::ctrEliminarMeasurement($this->idEliminarMeasurement);
+        $respuesta = ctrMeasurements::ctrEliminarMediciones($this->idEliminarMeasurement);
 
         echo $respuesta;
     }

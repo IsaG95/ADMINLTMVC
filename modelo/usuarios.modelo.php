@@ -2,6 +2,9 @@
 
 require_once "conexion.php";
 
+$rol22 = 3;
+$fotos = 'fotos';
+
 class mdlUsuarios {
 
     static public function mdlMostrarUsuariosl($tabla, $item, $valor) {
@@ -38,20 +41,24 @@ class mdlUsuarios {
     }
 
     static public function mdlEditarUsuarios($tabla, $datos) {
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET usuario=:NOM_E, password=:PASSSER_E, nombre=:NOMUSER_E, foto=:IMG_E, rol=:ROL_E WHERE id=:IDE");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+                                               SET usuario=:NOM_E, password=:PASSSER_E, nombre=:NOMUSER_E, foto=:IMG_E, rol=:ROL_E 
+                                               WHERE id=:IDE");
+    
         $stmt->bindParam(":IDE", $datos["idE"], PDO::PARAM_INT);
         $stmt->bindParam(":NOM_E", $datos["nom_usuarioE"], PDO::PARAM_STR);
         $stmt->bindParam(":NOMUSER_E", $datos["nom_userE"], PDO::PARAM_STR);
-        $stmt->bindParam(":PASSSER_E", $datos["passE"], PDO::PARAM_STR);
+        $stmt->bindParam(":PASSSER_E", $datos["passE"], PDO::PARAM_STR); // Se asume que se ha encriptado previamente
         $stmt->bindParam(":ROL_E", $datos["rol_userE"], PDO::PARAM_STR);
         $stmt->bindParam(":IMG_E", $datos["img"], PDO::PARAM_STR);
-
+    
         if ($stmt->execute()) {
             return "ok";
         } else {
-            echo "error";
+            // Agregar esta línea para ver el error
+            print_r($stmt->errorInfo());
         }
-
+    
         $stmt = null;
     }
 
@@ -72,21 +79,56 @@ class mdlUsuarios {
         return $resultado;
     }
 
-    static public function mdlguardarUsuarios($tabla, $datos) {
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(usuario, password, nombre, foto, rol) VALUES (:USUARIO_u, :PASS_u, :NOMBRE_u, :FOTO_u, :ROL_u)");
-        $stmt->bindParam(":NOMBRE_u", $datos["nom_usuario"], PDO::PARAM_STR);
-        $stmt->bindParam(":USUARIO_u", $datos["nom_user"], PDO::PARAM_STR);
-        $stmt->bindParam(":PASS_u", $datos["pass_user"], PDO::PARAM_STR);
-        $stmt->bindParam(":ROL_u", $datos["rol_user"], PDO::PARAM_INT);
-        $stmt->bindParam(":FOTO_u", $datos["foto"], PDO::PARAM_STR);
+    
 
+
+    static public function mdlguardarUsuarios($tabla, $datos) {
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(usuario, password, nombre, foto, rol) 
+                                               VALUES (:USUARIO_u, :PASS_u, :NOMBRE_u, :FOTO_u, :ROL_u)");
+    
+        $stmt->bindParam(":NOMBRE_u", $datos["nom_usuarios"], PDO::PARAM_STR);
+        $stmt->bindParam(":USUARIO_u", $datos["nom_user"], PDO::PARAM_STR);
+        $stmt->bindParam(":PASS_u", $datos["pass_user"], PDO::PARAM_STR); // En este caso puede encriptarse antes de pasar aquí
+        $stmt->bindParam(":ROL_u", $rol22, PDO::PARAM_STR);
+        $stmt->bindParam(":FOTO_u", $fotos , PDO::PARAM_STR);
+        // $stmt->bindParam(":ROL_u", $datos["rol_user"], PDO::PARAM_INT);
+       // $stmt->bindParam(":FOTO_u", $datos["foto"], PDO::PARAM_STR);
+
+
+    
         if ($stmt->execute()) {
             return "ok";
         } else {
-            echo "error";
+            // Agregar esta línea para ver el error
+            print_r($stmt->errorInfo());
+        }
+    
+        $stmt = null;
+    }
+
+    
+}
+
+class UsuariosModelo {
+
+    public static function mdlIngresarUsuario($tabla, $datos){
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(usuario, password, nombre, foto, rol) VALUES (:USUARIO_u, :PASS_u, :NOMBRE_u, :FOTO_u, :ROL_u)");
+        $stmt->bindParam(":USUARIO_u", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":PASS_u", $datos["password"], PDO::PARAM_STR);
+        $stmt->bindParam(":NOMBRE_u", $datos["nombre"], PDO::PARAM_STR);
+        $stmt->bindParam(":ROL_u", $rol22, PDO::PARAM_STR);
+        $stmt->bindParam(":FOTO_u", $fotos , PDO::PARAM_STR);
+        // $stmt->bindParam(":FOTO_u", $datos["foto"], PDO::PARAM_STR);
+       // $stmt->bindParam(":ROL_u", $datos["rol"], PDO::PARAM_INT);
+
+        if($stmt->execute()){
+            return "ok";
+        }else{
+            return "error";
         }
 
         $stmt = null;
     }
 }
+
 ?>

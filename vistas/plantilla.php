@@ -140,6 +140,8 @@ include "paginas/login.php";
 
     <script src="vistas/js/usuarios.js"></script>
     <script src="vistas/js/roles.js"></script>
+    <script src="vistas/js/measurements.js"></script>
+    <script src="vistas/js/students.js"></script>
     <script>
     $(document).ready(function() {
         $('.sidebar-menu').tree()

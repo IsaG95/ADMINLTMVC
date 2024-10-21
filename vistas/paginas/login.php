@@ -1,11 +1,11 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>usuario y roles</b>LTE</a>
+            <a href="../../index2.html"><b>Colegio</b> | Inicio de sesion</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">login</p>
+            <p class="login-box-msg">Login</p>
 
             <form method="post">
                 <div class="form-group has-feedback">

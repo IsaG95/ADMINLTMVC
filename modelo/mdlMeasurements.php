@@ -12,10 +12,11 @@ class mdlMeasurements {
     }
 
     static public function mdlGuardarMediciones($tabla, $datos) {
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (student_id, peso, altura, fecha) VALUES (:student_id, :peso, :altura, :fecha)");
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (student_id, peso, altura, bmi, fecha) VALUES (:student_id, :peso, :altura, :bmi, :fecha)");
         $stmt->bindParam(":student_id", $datos["student_id"], PDO::PARAM_INT);
         $stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_STR);
         $stmt->bindParam(":altura", $datos["altura"], PDO::PARAM_STR);
+        $stmt->bindParam(":bmi", $datos["bmi"], PDO::PARAM_STR);
         $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
         if ($stmt->execute()) {
@@ -28,11 +29,12 @@ class mdlMeasurements {
     }
 
     static public function mdlEditarMediciones($tabla, $datos) {
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET student_id = :student_id, peso = :peso, altura = :altura, fecha = :fecha WHERE id = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET student_id = :student_id, peso = :peso, altura = :altura, bmi = :bmi, fecha = :fecha WHERE id = :id");
         $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
         $stmt->bindParam(":student_id", $datos["student_id"], PDO::PARAM_INT);
         $stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_STR);
         $stmt->bindParam(":altura", $datos["altura"], PDO::PARAM_STR);
+        $stmt->bindParam(":bmi", $datos["bmi"], PDO::PARAM_STR);
         $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
         if ($stmt->execute()) {

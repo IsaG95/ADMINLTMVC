@@ -147,18 +147,8 @@
             </div>
             <form method="post">
 
-                <div class="form-group">
-                    <label>Estudiante</label>
-                    <select class="form-control" name="student_id" required>
-                        <?php
-                        $estudiantes = ctrStudents::ctrMostrarTodosEstudiantes();
-                        foreach($estudiantes as $estudiante) {
-                        ?>
-                        <option value="<?php echo $estudiante["student_id"] ?>"><?php echo $estudiante["nombre"] . " " . $estudiante["apellido"] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+            <div class="form-group">
+                    <input type="number" class="form-control" name="student_id" placeholder="student_id" required>
                 </div>
 
                 <div class="form-group">
@@ -173,6 +163,10 @@
                     <input type="number" step="0.01" class="form-control" name="altura" placeholder="Altura (m)" required>
                 </div>
 
+                <div class="form-group">
+                    <input type="number" step="0.01" class="form-control" name="bmi" placeholder="BMI" required>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -180,7 +174,7 @@
 
                 <?php 
                 $guardarMedicion = new ctrMeasurements();
-                $guardarMedicion->mdlGuardarMediciones();
+                $guardarMedicion->ctrGuardarMediciones();
                 ?>
 
             </form>
@@ -219,8 +213,8 @@
                 </div>
 
                 <?php 
-                $editarMedicion = new ctrMediciones();
-                $editarMedicion->ctrEditarMedicion();
+                $editarMedicion = new ctrMeasurements();
+                $editarMedicion->ctrEditarMediciones();
                 ?>
 
             </form>

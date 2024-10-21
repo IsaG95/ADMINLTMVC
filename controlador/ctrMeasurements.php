@@ -15,7 +15,8 @@ class ctrMeasurements {
                 "student_id" => $_POST["student_id"],
                 "peso" => $_POST["peso"],
                 "altura" => $_POST["altura"],
-                "fecha" => $_POST["fecha"]
+                "fecha" => $_POST["fecha"],
+                "bmi" => $_POST["bmi"]
             );
 
             $tabla = "measurements";
@@ -49,6 +50,7 @@ class ctrMeasurements {
                 "student_id" => $_POST["student_id"],
                 "peso" => $_POST["peso"],
                 "altura" => $_POST["altura"],
+                "bmi" => $_POST["bmi"],
                 "fecha" => $_POST["fecha"]
             );
 
@@ -83,4 +85,4 @@ class ctrMeasurements {
     }
 
 }
-?>
+

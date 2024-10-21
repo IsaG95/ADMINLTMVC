@@ -43,11 +43,33 @@ class AjaxUsuarios{
 
     }
 
+    public $usuario;
+    public $password;
 
+    public $nombre;
+
+    public $foto;
+
+    public $rol;
+
+    public function ajaxCrearUsuarios(){
+        $datos = array(
+            "usuario" => $this->usuario,
+            "password" => $this->password,
+            "nombre" => $this->nombre,
+            "foto" => $this->foto,
+            "rol" => $this->rol
+        );
+    
+        $respuesta = ctrUsuarios::ctrCrearUsuarios($datos);
+        echo json_encode($respuesta);
+    }
 
 
 
 }
+
+
 
 
 
@@ -79,6 +101,16 @@ $eliminar->ajaxEliminarUsuarios();
 
 }
 
+// Crear usuario
+if(isset($_POST["nuevoUsuario"])){
+    $crear = new AjaxUsuarios();
+    $crear->usuario = $_POST["usuario"];
+    $crear->password = $_POST["password"];
+    $crear->nombre = $_POST["nombre"];
+    $crear->foto = $_POST["foto"];
+    $crear->rol = $_POST["rol"];
+    $crear->ajaxCrearUsuarios();
+}
 
 
 ?>

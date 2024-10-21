@@ -203,17 +203,22 @@ Modal Crear usuarios
 
                     <label>rol</label>
                     <select class="form-control" name="rol_user" required>
-
+                            <option value="1">Admin</option>
+                            <option value="2">Desarrollador</option>
                         <?php
+                        /*
                         $roles = ctrRoles::ctrMostrarRoles2();
                         
                         foreach($roles as $rol){
                             
 ?>
                         <option value="<?php echo $rol["id_roles"] ?>"><?php echo $rol["nom_rol"] ?></option>
+                        
+                        
                         <?php
                        }
-?>
+                        */
+                        ?>
 
                     </select>
 

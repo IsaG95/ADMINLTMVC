@@ -53,6 +53,15 @@ class ctrUsuarios {
         return $respuesta;
     }
 
+   
+
+    // Método para insertar un nuevo usuario
+    public static function ctrCrearUsuarios($datos){
+        $tabla = "usuarios";
+        $respuesta = UsuariosModelo::mdlIngresarUsuario($tabla, $datos);
+        return $respuesta;
+    }
+
     static public function ctrEditarusuarios() {
 
         if(isset($_POST["idPerfilE"])) {
