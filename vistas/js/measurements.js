@@ -39,10 +39,10 @@ Editar medición
 
 $(".tablaMeasurements").on("click", ".btnEditarMeasurement", function(){
 
-	var idMeasurement = $(this).attr("idMeasurement");
+	var measurementid = $(this).attr("id");
 
 	var datos = new FormData();
-	datos.append("idMeasurement", idMeasurement);
+	datos.append("measurementid", measurementid);
 
 	$.ajax({
 
@@ -55,11 +55,12 @@ $(".tablaMeasurements").on("click", ".btnEditarMeasurement", function(){
 		dataType: "json",
 		success: function (respuesta) {
 
-			$("#idMeasurementE").val(respuesta["id"]);
-			$("#weightE").val(respuesta["weight"]);
-			$("#heightE").val(respuesta["height"]);
+			$("#measurement_idE").val(respuesta["measurement_id"]);
+			$("#student_idE").val(respuesta["student_id"]);
+			$("#fechaE").val(respuesta["fecha"]);
 			$("#bmiE").val(respuesta["bmi"]);
-			$("#fat_percentageE").val(respuesta["fat_percentage"]);
+			$("#pesoE").val(respuesta["peso"]);
+			$("#alturaE").val(respuesta["altura"]);
 		}
 
 	})
@@ -73,7 +74,7 @@ Eliminar medición
 
 $(document).on("click", ".eliminarMeasurement", function(){
 
-	var idMeasurement = $(this).attr("idMeasurementE");
+	var measurement_id = $(this).attr("idMeasurementE");
 
 	swal({
 		title: '¿Está seguro de eliminar esta medición?',
@@ -89,7 +90,7 @@ $(document).on("click", ".eliminarMeasurement", function(){
 		if (result.value) {
 
 			var datos = new FormData();
-			datos.append("idMeasurementE", idMeasurement);
+			datos.append("idMeasurementE", measurement_id);
 
 			$.ajax({
 

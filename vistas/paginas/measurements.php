@@ -193,18 +193,18 @@
             </div>
             <form method="post">
 
-                <input type="hidden" id="idMedicionE" name="idMedicionE">
+                <input type="hidden" id="measurement_id" name="measurement_id">
 
                 <div class="form-group">
-                    <input type="date" class="form-control" id="fechaE" name="fechaE" placeholder="Fecha" required>
+                    <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha" required>
                 </div>
 
                 <div class="form-group">
-                    <input type="number" step="0.01" class="form-control" id="pesoE" name="pesoE" placeholder="Peso (kg)" required>
+                    <input type="number" step="0.01" class="form-control" id="peso" name="peso" placeholder="Peso (kg)" required>
                 </div>
 
                 <div class="form-group">
-                    <input type="number" step="0.01" class="form-control" id="alturaE" name="alturaE" placeholder="Altura (m)" required>
+                    <input type="number" step="0.01" class="form-control" id="altura" name="altura" placeholder="Altura (m)" required>
                 </div>
 
                 <div class="modal-footer">

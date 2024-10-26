@@ -4,11 +4,19 @@ require_once "conexion.php";
 
 class mdlMeasurements {
 
-    static public function mdlMostrarMediciones($tabla) {
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
-        $stmt->execute();
-        return $stmt->fetchAll();
-        $stmt = null;
+    public static function mdlMostrarMediciones($tabla) {
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            if (!$result) {
+                echo "No se encontraron datos en la tabla $tabla.";
+            }
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error en la consulta: " . $e->getMessage();
+            return null;
+        }
     }
 
     static public function mdlGuardarMediciones($tabla, $datos) {
@@ -29,8 +37,8 @@ class mdlMeasurements {
     }
 
     static public function mdlEditarMediciones($tabla, $datos) {
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET student_id = :student_id, peso = :peso, altura = :altura, bmi = :bmi, fecha = :fecha WHERE id = :id");
-        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET student_id = :student_id, peso = :peso, altura = :altura, bmi = :bmi, fecha = :fecha WHERE measurement_id = :measurement_id");
+        $stmt->bindParam(":measurement_id", $datos["measurement_id"], PDO::PARAM_INT);
         $stmt->bindParam(":student_id", $datos["student_id"], PDO::PARAM_INT);
         $stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_STR);
         $stmt->bindParam(":altura", $datos["altura"], PDO::PARAM_STR);
@@ -47,8 +55,8 @@ class mdlMeasurements {
     }
 
     static public function mdlEliminarMediciones($tabla, $id) {
-        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE measurement_id = :measurement_id");
+        $stmt->bindParam(":measurement_id", $id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             return "ok";

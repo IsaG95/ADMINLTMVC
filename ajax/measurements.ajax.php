@@ -5,14 +5,13 @@ require_once "../modelo/mdlMeasurements.php";
 
 class AjaxMeasurements {
 
-    public $idMeasurement;
+    public $measurementid;
 
     public function ajaxEditarMeasurement() {
-        $item = "id";
-        $valor = $this->idMeasurement;
+        $item = "measurement_id";
+        $valor = $this->measurementid;
 
         $respuesta = ctrMeasurements::ctrMostrarMediciones($item, $valor);
-
         echo json_encode($respuesta);
     }
 
@@ -20,15 +19,14 @@ class AjaxMeasurements {
 
     public function ajaxEliminarMeasurement() {
         $respuesta = ctrMeasurements::ctrEliminarMediciones($this->idEliminarMeasurement);
-
         echo $respuesta;
     }
 }
 
 // Editar medición
-if (isset($_POST["idMeasurement"])) {
+if (isset($_POST["measurement_id"])) {
     $editar = new AjaxMeasurements();
-    $editar->idMeasurement = $_POST["idMeasurement"];
+    $editar->measurementid = $_POST["measurement_id"];
     $editar->ajaxEditarMeasurement();
 }
 
@@ -38,5 +36,4 @@ if (isset($_POST["idMeasurementE"])) {
     $eliminar->idEliminarMeasurement = $_POST["idMeasurementE"];
     $eliminar->ajaxEliminarMeasurement();
 }
-
 ?>

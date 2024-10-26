@@ -9,8 +9,7 @@ class ctrMeasurements {
     }
 
     static public function ctrGuardarMediciones() {
-        if(isset($_POST["peso"])) {
-
+        if (isset($_POST["peso"])) {
             $datos = array(
                 "student_id" => $_POST["student_id"],
                 "peso" => $_POST["peso"],
@@ -43,10 +42,9 @@ class ctrMeasurements {
     }
 
     static public function ctrEditarMediciones() {
-        if (isset($_POST["idMedicion"])) {
-
+        if (isset($_POST["measurement_id"])) {
             $datos = array(
-                "id" => $_POST["idMedicion"],
+                "measurement_id" => $_POST["measurement_id"],
                 "student_id" => $_POST["student_id"],
                 "peso" => $_POST["peso"],
                 "altura" => $_POST["altura"],
@@ -80,9 +78,7 @@ class ctrMeasurements {
     static public function ctrEliminarMediciones($id) {
         $tabla = "measurements";
         $respuesta = mdlMeasurements::mdlEliminarMediciones($tabla, $id);
-
         return $respuesta;
     }
-
 }
-
+?>
