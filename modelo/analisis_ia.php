@@ -14,12 +14,14 @@ if (!empty($mediciones) && is_array($mediciones)) {
         $peso = $medicion["peso"];
         $altura = $medicion["altura"];
         $bmi = $medicion["bmi"];
+        $student_id = $medicion["student_id"];
 
         // Agregar los datos a la lista para el análisis de IA
         $data[] = [
             "peso" => $peso,
             "altura" => $altura,
-            "bmi" => $bmi
+            "bmi" => $bmi,
+            "student_id" => $student_id
         ];
     }
 
@@ -29,32 +31,57 @@ if (!empty($mediciones) && is_array($mediciones)) {
     // Ejecutar el script de Python y obtener el resultado
     $output = shell_exec("python analisis_ia.py");
 
-    // Decodificar el resultado JSON devuelto por Python
-    $predicciones = json_decode($output, true);
+// Limpiar la salida
+$output = preg_replace('/\x1B\[[0-9;]*[mK]/', '', $output); // Eliminar códigos de formato ANSI
 
+// Encontrar la posición del primer '[' en la salida
+$pos = strpos($output, '[');
+if ($pos !== false) {
+    // Extraer solo la parte que contiene el JSON
+    $jsonOutput = substr($output, $pos); // Obtener desde el primer '[' hasta el final
+} else {
+    echo "No se encontró la parte JSON en la salida.";
+    return;
+}
+
+// Decodificar el resultado JSON devuelto por Python
+$predicciones = json_decode(trim($jsonOutput), true);
+
+// Imprimir la salida limpia para depuración
+var_dump($jsonOutput); // Verificar que el JSON esté limpio
+
+
+    // Verificar errores en la decodificación
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo "Error al decodificar JSON: " . json_last_error_msg();
+        return; // Detener si hay un fallo en la decodificación
+    }
+
+
+    // Procesar las predicciones si no hay errores
     if ($predicciones && is_array($predicciones)) {
         foreach ($predicciones as $index => $prediccion) {
             $riesgo = $prediccion['riesgo'];
-            $peso = $data[$index]['peso'];
-            $altura = $data[$index]['altura'];
-            $bmi = $data[$index]['bmi'];
+            $student_id = $prediccion['student_id'];
 
             // Preparar la inserción de datos en la tabla `analisis_data`
-            $stmt = Conexion::conectar()->prepare("INSERT INTO analisis_data (peso, altura, bmi, riesgo) VALUES (:peso, :altura, :bmi, :riesgo)");
-            $stmt->bindParam(":peso", $peso);
-            $stmt->bindParam(":altura", $altura);
-            $stmt->bindParam(":bmi", $bmi);
+            $stmt = Conexion::conectar()->prepare("INSERT INTO analisis_data (student_id, riesgo) VALUES (:student_id, :riesgo)");
+            $stmt->bindParam(":student_id", $student_id);
             $stmt->bindParam(":riesgo", $riesgo);
 
             if (!$stmt->execute()) {
-                echo "Error al insertar los datos en la tabla analisis_data.";
+                echo "Error al insertar los datos en la tabla analisis_data: " . implode(", ", $stmt->errorInfo());
                 return; // Detener si hay un fallo en la inserción
             }
         }
         echo "Análisis completado y datos insertados correctamente.";
-    } else {
+    } 
+    
+        else {
         echo "Error al procesar las predicciones de IA.";
     }
-} else {
+}
+
+    else {
     echo "No se encontraron datos para analizar en la tabla measurements.";
 }
